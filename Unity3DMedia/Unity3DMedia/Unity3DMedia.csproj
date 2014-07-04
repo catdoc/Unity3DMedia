@@ -38,7 +38,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MediaManager.cs" />
-    <Compile Include="AudioPlay.cs" />
+    <Compile Include="AudioPlayer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

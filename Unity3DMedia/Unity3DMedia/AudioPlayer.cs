@@ -2,14 +2,18 @@ using UnityEngine;
 using System.Collections;
 
 
+//	AudioPlayer.cs
+//	Author: Lu Zexi
+//	2014-07-04
+
 
 namespace Game.Media
 {
 	/// <summary>
-	/// Audio play.
+	/// Audio player.
 	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
-	public class AudioPlay : MonoBehaviour
+	public class AudioPlayer : MonoBehaviour
 	{
 		private float m_fVolume;	//the sound of volume.
 		private bool m_fAutoDestory = false;	//is auto destory.
