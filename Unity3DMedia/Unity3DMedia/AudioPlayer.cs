@@ -16,7 +16,6 @@ namespace Game.Media
 	public class AudioPlayer : MonoBehaviour
 	{
 		private float m_fVolume;	//the sound of volume.
-		private bool m_fAutoDestory = false;	//is auto destory.
 
 		/// <summary>
 		/// Init the specified clip and volume.
@@ -70,12 +69,7 @@ namespace Game.Media
 		public void StopAndNotice()
 		{
 			Stop();
-			//notice.
-			if(this.m_fAutoDestory)
-			{
-				MediaManager.sInstance.RemoveES(this);
-				Destroy(gameObject);
-			}
+			MediaManager.sInstance.RemoveAudioPlayer(this);
 		}
 
 		/// <summary>
@@ -84,10 +78,7 @@ namespace Game.Media
 		void Update ()
 		{
 			if(audio.isPlaying) return;
-			if(!audio.enabled)
-			{
-				StopAndNotice();
-			}
+			StopAndNotice();
 		}
 	}
 

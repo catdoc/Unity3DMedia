@@ -19,10 +19,12 @@ namespace Game.Media
 		private const int MAX_ENV = 5;
 		private const float FASE_OUT_TIME = 0.5F;
 
-		private AudioPlay m_cBGM;	//BGM
+		private AudioPlayer m_cBGM;	//BGM
 
-		private LinkedList<AudioPlay> m_lstEnableSE = new LinkedList<AudioPlay>();	//SE enable queue
-		private LinkedList<AudioPlay> m_lstEnableENV = new LinkedList<AudioPlay>();	//ENV enable queue
+		private LinkedList<AudioPlayer> m_lstEnableSE = new LinkedList<AudioPlayer>();	//SE enable queue
+		private LinkedList<AudioPlayer> m_lstEnableENV = new LinkedList<AudioPlayer>();	//ENV enable queue
+
+		private Queue<AudioPlayer> m_seqCache = new Queue<AudioPlayer>();	//the cache of the audio
 
 		public float BGM_VOLUME = 1F;	//the volume of the BGM
 		public float SE_VOLUME = 1F;	//the volume of the SE
@@ -71,7 +73,7 @@ namespace Game.Media
 		{
 			if(this.m_cBGM == null )
 			{
-				this.m_cBGM = (new GameObject("BGM")).AddComponent<AudioPlay>();
+				this.m_cBGM = (new GameObject("BGM")).AddComponent<AudioPlayer>();
 			}
 			if( this.m_cBGM.audio.clip == clip ) return;
 
@@ -98,9 +100,9 @@ namespace Game.Media
 		/// </summary>
 		/// <returns>The S.</returns>
 		/// <param name="clip">Clip.</param>
-		public AudioPlay PlaySE( AudioClip clip )
+		public AudioPlayer PlaySE( AudioClip clip )
 		{
-			AudioPlay ap = null;
+			AudioPlayer ap = null;
 			if( this.m_lstEnableSE.Count > MAX_SE )
 			{
 				ap = this.m_lstEnableSE.First.Value;
@@ -109,8 +111,7 @@ namespace Game.Media
 			}
 			else
 			{
-				ap = (new GameObject("AudioSE")).AddComponent<AudioPlay>();
-				ap.transform.parent = this.transform;
+				ap = GeneratorAudioPlayer();
 			}
 			this.m_lstEnableSE.AddLast(ap);
 			ap.Init(clip);
@@ -123,9 +124,9 @@ namespace Game.Media
 		/// </summary>
 		/// <returns>The EN.</returns>
 		/// <param name="clip">Clip.</param>
-		public AudioPlay PlayENV( AudioClip clip )
+		public AudioPlayer PlayENV( AudioClip clip )
 		{
-			AudioPlay ap = null;
+			AudioPlayer ap = null;
 			if( this.m_lstEnableENV.Count > MAX_SE )
 			{
 				ap = this.m_lstEnableENV.First.Value;
@@ -134,8 +135,7 @@ namespace Game.Media
 			}
 			else
 			{
-				ap = (new GameObject("AudioENV")).AddComponent<AudioPlay>();
-				ap.transform.parent = this.transform;
+				ap = GeneratorAudioPlayer();
 			}
 			this.m_lstEnableENV.AddLast(ap);
 			ap.Init(clip);
@@ -148,11 +148,11 @@ namespace Game.Media
 		/// </summary>
 		public void ChangeVolume()
 		{
-			foreach( AudioPlay item in this.m_lstEnableSE )
+			foreach( AudioPlayer item in this.m_lstEnableSE )
 			{
 				item.ChangeVolume(MUTE , SE_VOLUME);
 			}
-			foreach( AudioPlay item in this.m_lstEnableENV )
+			foreach( AudioPlayer item in this.m_lstEnableENV )
 			{
 				item.ChangeVolume(MUTE , ENV_VOLUME);
 			}
@@ -162,9 +162,12 @@ namespace Game.Media
 		/// Removes the ES.
 		/// </summary>
 		/// <param name="ap">Ap.</param>
-		public void RemoveES( AudioPlay ap )
+		public void RemoveAudioPlayer( AudioPlayer ap )
 		{
 			this.m_lstEnableSE.Remove(ap);
+			this.m_lstEnableENV.Remove(ap);
+			ap.audio.clip = null;
+			this.m_seqCache.Enqueue(ap);
 		}
 
 		/// <summary>
@@ -172,9 +175,11 @@ namespace Game.Media
 		/// </summary>
 		public void StopENV()
 		{
-			foreach( AudioPlay ap in this.m_lstEnableENV )
+			foreach( AudioPlayer ap in this.m_lstEnableENV )
 			{
 				ap.Stop();
+				ap.audio.clip = null;
+				this.m_seqCache.Enqueue(ap);
 			}
 			this.m_lstEnableENV.Clear();
 		}
@@ -199,6 +204,21 @@ namespace Game.Media
 			if (callback != null) {
 				callback();
 			}
+		}
+
+		/// <summary>
+		/// Gets the cache.
+		/// </summary>
+		/// <returns>The cache.</returns>
+		private AudioPlayer GeneratorAudioPlayer()
+		{
+			if( this.m_seqCache.Count > 0 )
+			{
+				return this.m_seqCache.Dequeue();
+			}
+			AudioPlayer ap = (new GameObject("AudioPlayer")).AddComponent<AudioPlayer>();
+			ap.transform.parent = this.transform;
+			return ap;
 		}
 
 		/// <summary>
