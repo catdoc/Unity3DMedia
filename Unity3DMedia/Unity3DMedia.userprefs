@@ -1,17 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Unity3DMedia/MediaManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Unity3DMedia/AudioPlayer.cs">
     <Files>
-      <File FileName="Unity3DMedia/MediaManager.cs" Line="14" Column="20" />
-      <File FileName="Unity3DMedia/AssemblyInfo.cs" Line="15" Column="1" />
-      <File FileName="Unity3DMedia/AudioPlay.cs" Line="80" Column="21" />
+      <File FileName="Unity3DMedia/MediaManager.cs" Line="168" Column="35" />
+      <File FileName="Unity3DMedia/AudioPlayer.cs" Line="54" Column="4" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Unity3DMedia" expanded="True">
             <Node name="References" expanded="True" />
-            <Node name="MediaManager.cs" selected="True" />
+            <Node name="AudioPlayer.cs" selected="True" />
           </Node>
         </State>
       </Pad>

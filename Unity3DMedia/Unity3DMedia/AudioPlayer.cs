@@ -35,11 +35,13 @@ namespace Game.Media
 		/// <param name="volume">Volume.</param>
 		public void Play( bool mute , float volume , bool loop = false )
 		{
+			this.gameObject.SetActive(true);
 			this.enabled = true;
 			this.audio.enabled = true;
 			this.audio.mute = mute;
 			this.audio.loop = loop;
 			this.audio.volume = volume * this.m_fVolume;
+			this.audio.Play();
 		}
 
 		/// <summary>
@@ -61,6 +63,7 @@ namespace Game.Media
 			this.enabled = false;
 			this.audio.Stop();
 			this.audio.enabled = false;
+			this.gameObject.SetActive(false);
 		}
 
 		/// <summary>

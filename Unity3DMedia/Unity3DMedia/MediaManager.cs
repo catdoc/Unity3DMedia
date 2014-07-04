@@ -37,7 +37,7 @@ namespace Game.Media
 		{
 			get
 			{
-				if(s_cInstance != null )
+				if(s_cInstance == null )
 				{
 					s_cInstance = (new GameObject("MediaManager")).AddComponent<MediaManager>();
 				}
@@ -69,11 +69,12 @@ namespace Game.Media
 		/// </summary>
 		/// <returns>The background.</returns>
 		/// <param name="clip">Clip.</param>
-		public void PlayBGM( AudioClip clip , bool useFade = true )  
+		public void PlayBGM( AudioClip clip , bool useFade = false )  
 		{
 			if(this.m_cBGM == null )
 			{
 				this.m_cBGM = (new GameObject("BGM")).AddComponent<AudioPlayer>();
+				this.m_cBGM.transform.parent = this.transform;
 			}
 			if( this.m_cBGM.audio.clip == clip ) return;
 
@@ -195,12 +196,7 @@ namespace Game.Media
 			StopCoroutine("Fadeout");
 			float currentTime = 0.0f;
 			float firstVol = audio.volume;
-			while (duration > currentTime)
-			{
-				currentTime += Time.fixedDeltaTime;
-				audio.volume = Mathf.Lerp(firstVol, 0.0f, currentTime/duration );
-				yield return new WaitForSeconds(Time.fixedDeltaTime);
-			}
+			yield return new WaitForSeconds(duration);
 			if (callback != null) {
 				callback();
 			}
