@@ -190,7 +190,7 @@ namespace Game.Media
 		/// </summary>
 		/// <param name="ap">Ap.</param>
 		public void StopENV( AudioPlayer ap )
-		{
+		{ 
 			ap.Stop();
 			ap.audio.clip = null;
 			this.m_lstEnableENV.Remove(ap);
