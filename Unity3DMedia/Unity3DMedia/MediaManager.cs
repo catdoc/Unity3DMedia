@@ -186,6 +186,18 @@ namespace Game.Media
 		}
 
 		/// <summary>
+		/// Stops the ENV.
+		/// </summary>
+		/// <param name="ap">Ap.</param>
+		public void StopENV( AudioPlayer ap )
+		{
+			ap.Stop();
+			ap.audio.clip = null;
+			this.m_lstEnableENV.Remove(ap);
+			this.m_seqCache.Enqueue(ap);
+		}
+
+		/// <summary>
 		/// Fadeout the specified duration, audio and callback.
 		/// </summary>
 		/// <param name="duration">Duration.</param>
@@ -196,8 +208,14 @@ namespace Game.Media
 			StopCoroutine("Fadeout");
 			float currentTime = 0.0f;
 			float firstVol = audio.volume;
-			yield return new WaitForSeconds(duration);
-			if (callback != null) {
+			while (duration > currentTime)
+			{
+				currentTime += Time.fixedDeltaTime;
+				audio.volume = Mathf.Lerp(firstVol, 0.0f, currentTime/duration );
+				yield return new WaitForSeconds(Time.fixedDeltaTime);
+			}
+			if (callback != null)
+			{
 				callback();
 			}
 		}
