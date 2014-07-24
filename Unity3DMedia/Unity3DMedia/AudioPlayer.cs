@@ -72,7 +72,7 @@ namespace Game.Media
 		public void StopAndNotice()
 		{
 			Stop();
-			MediaManager.sInstance.RemoveAudioPlayer(this);
+			MediaMgr.sInstance.RemoveAudioPlayer(this);
 		}
 
 		/// <summary>

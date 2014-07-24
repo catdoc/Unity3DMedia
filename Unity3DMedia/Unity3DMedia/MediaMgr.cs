@@ -13,7 +13,7 @@ namespace Game.Media
 	/// <summary>
 	/// Media manager.
 	/// </summary>
-	public class MediaManager : MonoBehaviour
+	public class MediaMgr : MonoBehaviour
 	{
 		private const int MAX_SE = 10;
 		private const int MAX_ENV = 5;
@@ -31,21 +31,21 @@ namespace Game.Media
 		public float ENV_VOLUME = 1F;	//the volume of the ENV
 		public bool MUTE = false;	//the mute
 
-		private static MediaManager s_cInstance;	//the static instance;
+		private static MediaMgr s_cInstance;	//the static instance;
 
-		public static MediaManager sInstance
+		public static MediaMgr sInstance
 		{
 			get
 			{
 				if(s_cInstance == null )
 				{
-					s_cInstance = (new GameObject("MediaManager")).AddComponent<MediaManager>();
+					s_cInstance = (new GameObject("MediaMgr")).AddComponent<MediaMgr>();
 				}
 				return s_cInstance;
 			}
 		}
 
-		public MediaManager ()
+		public MediaMgr ()
 		{
 			//
 		}
