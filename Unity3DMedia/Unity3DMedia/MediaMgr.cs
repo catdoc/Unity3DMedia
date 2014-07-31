@@ -67,6 +67,17 @@ namespace Game.Media
 		/// <summary>
 		/// Plaies the background.
 		/// </summary>
+		/// <param name="name">Name.</param>
+		/// <param name="useFade">If set to <c>true</c> use fade.</param>
+		public void PlayBGM(string name , bool useFade = false)
+		{
+			AudioClip clip = Resources.Load(name) as AudioClip;
+			PlayBGM(clip,useFade);
+		}
+
+		/// <summary>
+		/// Plaies the background.
+		/// </summary>
 		/// <returns>The background.</returns>
 		/// <param name="clip">Clip.</param>
 		public void PlayBGM( AudioClip clip , bool useFade = false )  
@@ -97,6 +108,17 @@ namespace Game.Media
 		}
 
 		/// <summary>
+		/// Plaies the S.
+		/// </summary>
+		/// <returns>The S.</returns>
+		/// <param name="name">Name.</param>
+		public AudioPlayer PlaySE(string name)
+		{
+			AudioClip clip = Resources.Load(name) as AudioClip;
+			return PlaySE(clip);
+		}
+
+		/// <summary>
 		/// Play the SE.
 		/// </summary>
 		/// <returns>The S.</returns>
@@ -118,6 +140,17 @@ namespace Game.Media
 			ap.Init(clip);
 			ap.Play(MUTE , SE_VOLUME);
 			return ap;
+		}
+
+		/// <summary>
+		/// Plaies the EN.
+		/// </summary>
+		/// <returns>The EN.</returns>
+		/// <param name="name">Name.</param>
+		public AudioPlayer PlayENV(string name)
+		{
+			AudioClip clip = Resources.Load(name) as AudioClip;
+			return PlayENV(clip);
 		}
 
 		/// <summary>
