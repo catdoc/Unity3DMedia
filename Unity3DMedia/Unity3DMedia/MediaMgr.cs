@@ -108,6 +108,17 @@ namespace Game.Media
 		}
 
 		/// <summary>
+		/// Stops the background.
+		/// </summary>
+		public void StopBGM()
+		{
+			if(this.m_cBGM!= null )
+			{
+				this.m_cBGM.Stop();
+			}
+		}
+
+		/// <summary>
 		/// Plaies the S.
 		/// </summary>
 		/// <returns>The S.</returns>
