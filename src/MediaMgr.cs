@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -27,8 +27,11 @@ namespace Game.Media
 		private Queue<AudioPlayer> m_seqCache = new Queue<AudioPlayer>();	//the cache of the audio
 
 		public float BGM_VOLUME = 1F;	//the volume of the BGM
+		public float BGM_PITCH = 1F;	//the pitch of the BGM
 		public float SE_VOLUME = 1F;	//the volume of the SE
+		public float SE_PITCH = 1F;	//the pitch of the SE
 		public float ENV_VOLUME = 1F;	//the volume of the ENV
+		public float ENV_PITCH = 1F;	//the pitch of the ENV
 		public bool MUTE = false;	//the mute
 
 		private static MediaMgr s_cInstance;	//the static instance;
@@ -95,7 +98,7 @@ namespace Game.Media
 				                       () =>{
 											this.m_cBGM.Stop();
 											this.m_cBGM.Init(clip);
-											this.m_cBGM.Play(MUTE,BGM_VOLUME , true);
+											this.m_cBGM.Play(MUTE,BGM_VOLUME , BGM_PITCH , true);
 										}
 				                       ));
 			}
@@ -103,7 +106,7 @@ namespace Game.Media
 			{
 				this.m_cBGM.Stop();
 				this.m_cBGM.Init(clip);
-				this.m_cBGM.Play(MUTE , BGM_VOLUME , true);
+				this.m_cBGM.Play(MUTE , BGM_VOLUME , BGM_PITCH , true);
 			}
 		}
 
@@ -149,7 +152,7 @@ namespace Game.Media
 			}
 			this.m_lstEnableSE.AddLast(ap);
 			ap.Init(clip);
-			ap.Play(MUTE , SE_VOLUME);
+			ap.Play(MUTE , SE_VOLUME , SE_PITCH);
 			return ap;
 		}
 
@@ -184,7 +187,7 @@ namespace Game.Media
 			}
 			this.m_lstEnableENV.AddLast(ap);
 			ap.Init(clip);
-			ap.Play(MUTE , ENV_VOLUME , true);
+			ap.Play(MUTE , ENV_VOLUME , ENV_PITCH , true);
 			return ap;
 		}
 
@@ -195,11 +198,11 @@ namespace Game.Media
 		{
 			foreach( AudioPlayer item in this.m_lstEnableSE )
 			{
-				item.ChangeVolume(MUTE , SE_VOLUME);
+				item.ChangeVolume(MUTE , SE_VOLUME , SE_PITCH);
 			}
 			foreach( AudioPlayer item in this.m_lstEnableENV )
 			{
-				item.ChangeVolume(MUTE , ENV_VOLUME);
+				item.ChangeVolume(MUTE , ENV_VOLUME , ENV_PITCH);
 			}
 		}
 

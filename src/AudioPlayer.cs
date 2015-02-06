@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 
@@ -16,16 +16,18 @@ namespace Game.Media
 	public class AudioPlayer : MonoBehaviour
 	{
 		private float m_fVolume;	//the sound of volume.
+		private float m_fPitch;	//the sound of pitch
 
 		/// <summary>
 		/// Init the specified clip and volume.
 		/// </summary>
 		/// <param name="clip">Clip.</param>
 		/// <param name="volume">Volume.</param>
-		public void Init( AudioClip clip , float volume = 1f )
+		public void Init( AudioClip clip , float volume = 1f , float pitch = 1f )
 		{
 			this.audio.clip = clip;
 			this.m_fVolume = volume;
+			this.m_fPitch = pitch;
 		}
 
 		/// <summary>
@@ -33,7 +35,7 @@ namespace Game.Media
 		/// </summary>
 		/// <param name="mute">If set to <c>true</c> mute.</param>
 		/// <param name="volume">Volume.</param>
-		public void Play( bool mute , float volume , bool loop = false )
+		public void Play( bool mute , float volume , float pitch , bool loop = false )
 		{
 			this.gameObject.SetActive(true);
 			this.enabled = true;
@@ -41,6 +43,7 @@ namespace Game.Media
 			this.audio.mute = mute;
 			this.audio.loop = loop;
 			this.audio.volume = volume * this.m_fVolume;
+			this.audio.pitch = pitch * this.m_fPitch;
 			this.audio.Play();
 		}
 
@@ -49,10 +52,11 @@ namespace Game.Media
 		/// </summary>
 		/// <param name="mute">If set to <c>true</c> mute.</param>
 		/// <param name="volume">Volume.</param>
-		public void ChangeVolume( bool mute , float volume )
+		public void ChangeVolume( bool mute , float volume , float pitch )
 		{
 			this.audio.mute = mute;
 			this.audio.volume = volume * this.m_fVolume;
+			this.audio.pitch = pitch * this.m_fPitch;
 		}
 
 		/// <summary>
